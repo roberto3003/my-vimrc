@@ -45,9 +45,10 @@ set wildmenu
 " THINGS TO CONSIDER
 " :b lets you autocomplete any open buffer
 
-#inoremap kj <Esc>
-#inoremap KJ <Esc>
+" inoremap kj <Esc>
+" inoremap KJ <Esc>
 
+nnoremap <F2> :sh<CR>
 
 
 " **********************************
