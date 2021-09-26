@@ -48,6 +48,23 @@ set wildmenu
 " inoremap kj <Esc>
 " inoremap KJ <Esc>
 
+"""" 2. Key Bindings.
+" More convenient movement when lines are wrapped.
+nmap j gj
+nmap k gk
+
+" Search settings
+set hlsearch " hilight
+set incsearch " jump to best fit
+ " Turn off seach hilighting with <CR>.
+nnoremap <CR> :nohlsearch<CR><CR>
+
+" Make statusline appear even with only single window.
+set laststatus=2
+
+" For using assembly files
+let g:asmsyntax = 'nasm64'
+
 nnoremap <F2> :sh<CR>
 
 
@@ -56,9 +73,45 @@ nnoremap <F2> :sh<CR>
 " **********************************
 let g:rustfmt_autosave = 1
 
+" let g:ale_linters = {'rust': ['analyzer']}
 
 
 
+syntax enable
+filetype plugin indent on
+
+autocmd BufNewFile,BufRead *.rs set filetype=rust
+
+let g:ale_linters = {
+\  'rust': ['analyzer'],
+\}
+
+let g:ale_fixers = { 'rust': ['rustfmt', 'trim_whitespace', 'remove_trailing_lines'] }
+
+" Optional, configure as-you-type completions
+set completeopt=menu,menuone,preview,noselect,noinsert
+let g:ale_completion_enabled = 1
+
+" Use C-o to go back to the document
+nnoremap <SPACE> :ALEGoToDefinition<CR>
+
+
+
+let g:ale_rust_rls_config = {
+  	\ 'rust': {
+  		\ 'all_targets': 1,
+  		\ 'build_on_save': 1,
+  		\ 'clippy_preference': 'on'
+  	\ }
+  	\ }
+  let g:ale_rust_rls_toolchain = ''
+  let g:ale_rust_rls_executable = 'rust-analyzer'
+  let g:ale_linters = {
+      \ 'rust': ['rls']
+      \ }
+  let g:ale_fixers = {
+      \ 'rust': ['rustfmt']
+      \ }
 
 
 " *******************************
@@ -83,3 +136,15 @@ let g:rustfmt_autosave = 1
 " Emmet shorcuts
 "let g:user_emmet_mode='n' " If you want to work only in normal mode
 "let g:user_emmet_leader_key=','
+
+" Put these lines at the very end of your vimrc file.
+
+" PLUGINS
+" Load all plugins now.
+" Plugins need to be added to runtimepath before helptags can be generated.
+packloadall
+" Load all of the helptags now, after plugins have been loaded.
+" All messages and errors will be ignored.
+silent! helptags ALL
+
+set mouse=a
